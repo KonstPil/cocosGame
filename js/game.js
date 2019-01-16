@@ -9,14 +9,16 @@ let GameLayer = cc.Layer.extend({
     //размер окна
     let size = cc.director.getWinSize();
 
-    let sprite = cc.Sprite.create("images/HelloWorld.png");//спрайт это картинка 
-    sprite.setPosition(size.width / 2, size.height / 2);
-    sprite.setScale(0.8);
-    this.addChild(sprite, 0);//0 это z-index для слоя 
+    let bgSprite = cc.Sprite.create(res.BG_IMAGE);//спрайт это картинка 
+    bgSprite.setPosition(size.width / 2, size.height / 2);
+    this.addChild(bgSprite, 0);//z-index для слоя 
 
-    let label = cc.LabelTTF.create("Hello World", "Arial", 40);//надпись 
-    label.setPosition(size.width / 2, size.height / 2);
-    this.addChild(label, 1);
+    //задаем через this т.к в дальнейшем будем использовать 
+    this._floor = cc.Sprite.create(res.FLOOR_IMAGE);
+    this._floor.setPosition(0, 0);
+    this._floor.setAnchorPoint(0, 0);
+    this.addChild(this._floor, zIndexFloor);
+
 
   },
 
@@ -36,9 +38,15 @@ GameLayer.scene = function () {
 
 
 window.onload = function () {
+  let targetWidth = 800;
+  let targetHeight = 450;
   cc.game.onStart = function () {
+    //resize window
+    cc.view.adjustViewPort(false);
+    cc.view.setDesignResolutionSize(targetWidth, targetHeight, cc.ResolutionPolicy.SHOW_ALL);
+    cc.view.resizeWithBrowserSize(true);
     //load resources
-    cc.LoaderScene.preload(["images/HelloWorld.png"], function () {
+    cc.LoaderScene.preload([res.BG_IMAGE, res.FLOOR_IMAGE], function () {
       cc.director.runScene(GameLayer.scene());
     }, this);
   };
