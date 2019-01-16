@@ -19,7 +19,9 @@ let GameLayer = cc.Layer.extend({
     this._floor.setAnchorPoint(0, 0);
     this.addChild(this._floor, zIndexFloor);
 
-
+    this._robin = new RobinSprite(res.ROBIN_IMAGE);
+    this._robin.setPosition(robinStartX, size.height / 2);
+    this.addChild(this._robin, zIndexRobin);//z-index для слоя 
   },
 
   onEnter() {
