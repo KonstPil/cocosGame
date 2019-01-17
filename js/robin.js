@@ -15,7 +15,6 @@ let RobinSprite = cc.Sprite.extend({
 			distance = this.speedY * dt;
 			newSpeed = this.speedY + GRAVITY * dt;//на сколько изменится скорость с учётом гравитации
 
-			console.log(distance);
 
 			this.y = this.y + distance;
 			this.speedY = newSpeed;
