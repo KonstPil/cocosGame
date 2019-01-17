@@ -62,15 +62,10 @@ GameLayer.scene = function () {
 
 
 window.onload = function () {
-  let targetWidth = 800;
-  let targetHeight = 450;
+
   cc.game.onStart = function () {
-    //resize window
-    cc.view.adjustViewPort(false);
-    cc.view.setDesignResolutionSize(targetWidth, targetHeight, cc.ResolutionPolicy.SHOW_ALL);
-    cc.view.resizeWithBrowserSize(true);
     //load resources
-    cc.LoaderScene.preload([res.BG_IMAGE, res.FLOOR_IMAGE], function () {
+    cc.LoaderScene.preload(g_resources, function () {
       cc.director.runScene(GameLayer.scene());
     }, this);
   };
