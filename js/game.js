@@ -21,6 +21,8 @@ let GameLayer = cc.Layer.extend({
 
     this._robin = new RobinSprite(res.ROBIN_IMAGE);
     this._robin.setPosition(robinStartX, size.height / 2);
+    this._robin.Reset();
+    this._robin.topOfScreen = size.height;
     this.addChild(this._robin, zIndexRobin);//z-index для слоя 
   },
 
@@ -34,10 +36,25 @@ let GameLayer = cc.Layer.extend({
       onTouchMoved: this.onTouchMoved,
       onTouchEnded: this.onTouchEnded
     }, this)
+
+    this.schedule(this.onTick)
   },
 
+  onTick(dt) {
+    if (this._robin.y < this._floor.y / 2) {
+      this._robin.Reset();
+      this._robin.y = cc.director.getWinSize().height / 2;
+    }
+    this._robin.UpdateRobin(dt)
+  },
+
+
   onTouchBegan(touch, event) {//при изменение размера экрана числовые значения на поле не будут менятся
-    let tp = touch.getLocation();//touchPoint
+    let target = event.getCurrentTarget();
+    if (target._robin.state === robbinStateStopped) {
+      target._robin.state = robbinStateMoving
+    }
+    target._robin.SetStartSpeed()
     return true//если ставим true то дальше бдует считывать onTouchMoved и onTouchEnded, если false-нет
   },
 

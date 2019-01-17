@@ -7,3 +7,5 @@ const robbinStateMoving = 1;
 const robbinStateStopped = 0;
 const robbinStartSpeedY = 300;
 const robinStartX = 240;
+
+const GRAVITY = -620;
